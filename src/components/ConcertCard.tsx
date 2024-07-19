@@ -7,7 +7,7 @@ import {
   Image,
   Flex,
   Box,
-  SimpleGrid,
+  Button,
 } from "@chakra-ui/react";
 import { format, parseISO } from "date-fns";
 
@@ -21,18 +21,18 @@ type Props = {
 
 export default function ConcertCard({ match }: Props) {
   return (
-    <Card>
+    <Card borderWidth="0.5px" borderRadius="lg">
       <CardBody>
         <Flex>
-          <Box>
+          <Box flex={1} mr={4} maxW="sm">
             <Image
               src={match.concert.image_url}
               alt={match.concert.name}
               borderRadius="lg"
-              maxW="md"
+              maxW="xs"
             />
-            <Stack mt="6" spacing="0">
-              <Heading size="md" mb="4">
+            <Stack mt="6" spacing="0" maxW="sm">
+              <Heading size="md" mb="4" overflowWrap={"normal"}>
                 {match.concert.name}
               </Heading>
               <Text>
@@ -49,14 +49,20 @@ export default function ConcertCard({ match }: Props) {
                 )}
               </Text>
               <Text fontSize="md">
-                Price range: {match.concert.min_price} -{" "}
+                Price range: ${match.concert.min_price} -{" $"}
                 {match.concert.max_price}
               </Text>
+              <Stack mt={3}>
+                <Button width="3xs">Mark as interested</Button>
+                <Button width="3xs" backgroundColor="blue" color="white">
+                  Buy tickets
+                </Button>
+              </Stack>
             </Stack>
           </Box>
-          <Box p="5" borderWidth="1px" borderRadius="lg">
-            <Heading size="md" mb="4">
-              Liked Tracks
+          <Box flex={1} p="5" borderWidth="1px" borderRadius="lg">
+            <Heading mb="4" size={"md"}>
+              Library Stats
             </Heading>
             <StatCard match={match} />
             {/* <SimpleGrid columns={3} spacing={1}>

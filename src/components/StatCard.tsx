@@ -39,7 +39,7 @@ export default function StatCard({ match }: Props) {
             </StatNumber>
           </Stat>
         </Flex>
-        <SimpleGrid columns={8}>
+        <SimpleGrid minChildWidth="100px" rowGap={2}>
           {match.albums.map((album) => (
             <Image
               src={album.image_url}
