@@ -4,17 +4,41 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { AuthSession } from "@/types";
 import { getServerSession } from "next-auth/next";
 
-export const customGet = async (url: string, session: AuthSession | null) => {
-  if (!session) {
-    return null;
-  }
-  const res = await fetch(url, {
+export const getWithAccessToken = async (
+  url: string,
+  session: AuthSession | null
+) => {
+  if (!session) return null;
+
+  const response = await fetch(url, {
     headers: {
       Authorization: `Bearer ${session.user.accessToken}`,
     },
-  }).then((res) => res.json());
+  });
 
-  return res;
+  if (!response.ok) {
+    throw new Error(
+      `Network response was not ok, status code: ${response.status}`
+    );
+  }
+
+  return await response.json();
+};
+
+export const getWithUsername = async (
+  url: string,
+  session: AuthSession | null
+) => {
+  if (!session) return null;
+  const response = await fetch(`${url}/${session.user.sub}`);
+
+  if (!response.ok) {
+    throw new Error(
+      `Network response was not ok, status code: ${response.status}`
+    );
+  }
+
+  return await response.json();
 };
 
 export const getAuthSession = async () => {
