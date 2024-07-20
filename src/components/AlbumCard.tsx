@@ -1,13 +1,5 @@
-import { AddIcon } from "@chakra-ui/icons";
-import {
-  List,
-  ListItem,
-  ListIcon,
-  Image,
-  Box,
-  Flex,
-  Heading,
-} from "@chakra-ui/react";
+import { Album } from "@/types";
+import { List, ListItem, Image, Box, Flex, Heading } from "@chakra-ui/react";
 import React from "react";
 
 type Props = { album: Album };

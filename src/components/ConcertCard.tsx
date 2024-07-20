@@ -12,8 +12,8 @@ import {
 import { format, parseISO } from "date-fns";
 
 import React from "react";
-import AlbumCard from "./AlbumCard";
 import StatCard from "./StatCard";
+import { Match } from "@/types";
 
 type Props = {
   match: Match;
@@ -65,11 +65,6 @@ export default function ConcertCard({ match }: Props) {
               Library Stats
             </Heading>
             <StatCard match={match} />
-            {/* <SimpleGrid columns={3} spacing={1}>
-              {match.albums.map((album) => (
-                <AlbumCard key={album.name} album={album} />
-              ))}
-            </SimpleGrid> */}
           </Box>
         </Flex>
       </CardBody>

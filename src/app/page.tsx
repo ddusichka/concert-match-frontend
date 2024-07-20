@@ -1,38 +1,59 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import ConcertCard from "@/components/ConcertCard";
+import React from "react";
+import Link from "next/link";
+import { Button, Image } from "@chakra-ui/react";
+import { getAuthSession } from "@/utils/serverUtils";
 
-function fetchDataFromLocalService() {
-  // Replace '/api/data' with your actual endpoint
-  const endpoint = "http://localhost:8000/matches/";
+export default async function Home() {
+  const session = await getAuthSession();
 
-  return fetch(endpoint)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .catch((error) =>
-      console.error("There was a problem with your fetch operation:", error)
-    );
-}
+  // if (!session) {
+  //   redirect("/login");
+  // }
 
-export default function MyComponent() {
-  const [data, setData] = useState<any[]>([]);
+  function fetchTicketmaster() {
+    const endpoint = "http://localhost:8000/concerts/";
 
-  useEffect(() => {
-    fetchDataFromLocalService().then((apiData) => {
-      setData(apiData);
-      console.log(apiData[0]);
-    });
-  }, []);
+    return fetch(endpoint)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .catch((error) =>
+        console.error("There was a problem with your fetch operation:", error)
+      );
+  }
 
   return (
     <div>
-      {data.map((match) => (
-        <ConcertCard key={match.id} match={match} />
-      ))}
+      {session ? (
+        <>
+          <h1>welcome, {session.user.name}!</h1>
+          {session.user.picture && (
+            <Image
+              src={session.user.picture}
+              alt="spotify logo"
+              width={50}
+              height={50}
+              rounded={24}
+            />
+          )}
+        </>
+      ) : (
+        <Link href="/matches">
+          <Button backgroundColor={"#1ED760"}>Login with Spotify</Button>{" "}
+        </Link>
+      )}
+      <Link href="/matches">
+        <Button backgroundColor={"#1ED760"}>Re-import Spotify library</Button>{" "}
+      </Link>
+      <Link href="/matches">
+        <Button>View all matching concerts</Button>
+      </Link>
+      <Link href="/matches">
+        <Button>View saved concerts</Button>
+      </Link>
     </div>
   );
 }

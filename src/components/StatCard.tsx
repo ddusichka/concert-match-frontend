@@ -1,8 +1,5 @@
-import { AddIcon } from "@chakra-ui/icons";
+import { Match } from "@/types";
 import {
-  List,
-  ListItem,
-  ListIcon,
   Image,
   Box,
   Flex,
@@ -12,15 +9,31 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  StatHelpText,
-  StatArrow,
-  StatGroup,
 } from "@chakra-ui/react";
 import React from "react";
 
 type Props = { match: Match };
 
 export default function StatCard({ match }: Props) {
+  function findEarliestAddedAtDate(): string {
+    let earliestDate: Date | null = null;
+
+    match.albums.forEach((album) => {
+      album.tracks.forEach((track) => {
+        const trackDate = new Date(track.added_at);
+        if (earliestDate === null || trackDate < earliestDate) {
+          earliestDate = trackDate;
+        }
+      });
+    });
+
+    if (earliestDate === null) {
+      return "Unknown";
+    }
+    const options = { year: "numeric", month: "long", day: "numeric" } as const;
+    return new Intl.DateTimeFormat("en-US", options).format(earliestDate);
+  }
+
   return (
     <Box>
       <Flex direction={"column"} gap={2}>
@@ -37,6 +50,10 @@ export default function StatCard({ match }: Props) {
                 0
               )}
             </StatNumber>
+          </Stat>
+          <Stat>
+            <StatLabel>First added to library on</StatLabel>
+            <StatNumber>{findEarliestAddedAtDate()}</StatNumber>
           </Stat>
         </Flex>
         <SimpleGrid minChildWidth="100px" rowGap={2}>

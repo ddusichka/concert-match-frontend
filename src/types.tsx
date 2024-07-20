@@ -1,4 +1,4 @@
-type ConcertInfo = {
+export type ConcertInfo = {
   id: number;
   name: string;
   image_url: string;
@@ -12,21 +12,38 @@ type ConcertInfo = {
   state: string;
 };
 
-type TrackInfo = {
+export type TrackInfo = {
   id: number;
   name: string;
+  added_at: string;
 };
 
-type Album = {
+export type Album = {
   name: string;
   artist: string;
   image_url: string;
   tracks: TrackInfo[];
 };
 
-type Match = {
+export type Match = {
   id: number;
   concert: ConcertInfo;
   artist_name: string;
   albums: Album[];
 };
+
+import { DefaultSession } from "next-auth";
+
+export interface AuthUser {
+  name: string;
+  email: string;
+  picture?: string | null;
+  image?: string | null;
+  accessToken: string;
+  sub: string;
+  expires_at: number;
+}
+
+export interface AuthSession extends Omit<DefaultSession, "user"> {
+  user: AuthUser;
+}
