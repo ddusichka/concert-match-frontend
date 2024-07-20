@@ -7,9 +7,15 @@ export type ConcertInfo = {
   genre: string;
   min_price: string;
   max_price: string;
+  market_id: number;
   venue: string;
   city: string;
   state: string;
+};
+
+export type Market = {
+  market_id: number;
+  description: string;
 };
 
 export type TrackInfo = {
@@ -22,6 +28,7 @@ export type Album = {
   name: string;
   artist: string;
   image_url: string;
+  release_date: string;
   tracks: TrackInfo[];
 };
 

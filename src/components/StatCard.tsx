@@ -1,16 +1,15 @@
 import { Match } from "@/types";
 import {
-  Image,
   Box,
   Flex,
-  Text,
-  SimpleGrid,
-  Heading,
   Stat,
   StatLabel,
   StatNumber,
+  Stack,
 } from "@chakra-ui/react";
 import React from "react";
+import AlbumRow from "./AlbumRow";
+import PlaylistHeader from "./PlaylistHeader";
 
 type Props = { match: Match };
 
@@ -35,16 +34,16 @@ export default function StatCard({ match }: Props) {
   }
 
   return (
-    <Box>
+    <Box color="brand.white">
       <Flex direction={"column"} gap={2}>
-        <Flex>
+        <Flex direction={"row"} gap={0}>
           <Stat>
-            <StatLabel>Liked albums</StatLabel>
-            <StatNumber>{match.albums.length}</StatNumber>
-          </Stat>{" "}
+            <StatLabel fontSize={20}>Liked albums</StatLabel>
+            <StatNumber fontSize={28}>{match.albums.length}</StatNumber>
+          </Stat>
           <Stat>
-            <StatLabel>Liked tracks</StatLabel>
-            <StatNumber>
+            <StatLabel fontSize={20}>Liked tracks</StatLabel>
+            <StatNumber fontSize={28}>
               {match.albums.reduce(
                 (total, album) => total + album.tracks.length,
                 0
@@ -52,21 +51,17 @@ export default function StatCard({ match }: Props) {
             </StatNumber>
           </Stat>
           <Stat>
-            <StatLabel>First added to library on</StatLabel>
-            <StatNumber>{findEarliestAddedAtDate()}</StatNumber>
+            <StatLabel fontSize={20}>First saved on</StatLabel>
+            <StatNumber fontSize={28}>{findEarliestAddedAtDate()}</StatNumber>
           </Stat>
         </Flex>
-        <SimpleGrid minChildWidth="100px" rowGap={2}>
+
+        <Stack gap="2" overflowX={"scroll"} maxHeight={"300px"}>
+          <PlaylistHeader />
           {match.albums.map((album) => (
-            <Image
-              src={album.image_url}
-              alt={album.name}
-              borderRadius="lg"
-              boxSize="100px"
-              objectFit="cover"
-            />
+            <AlbumRow album={album} />
           ))}
-        </SimpleGrid>
+        </Stack>
       </Flex>
     </Box>
   );
