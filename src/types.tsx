@@ -1,6 +1,8 @@
 export type ConcertInfo = {
   id: number;
   name: string;
+  description?: string;
+  url: string;
   image_url: string;
   local_date: string;
   local_time: string;

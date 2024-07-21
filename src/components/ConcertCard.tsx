@@ -10,8 +10,8 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { CheckIcon, AddIcon } from "@chakra-ui/icons";
-import { format, parseISO } from "date-fns";
 import { Match } from "@/types";
+import { formatDateTime } from "@/utils/clientUtils";
 
 type Props = {
   match: Match;
@@ -53,12 +53,7 @@ export default function ConcertCard({ match }: Props) {
         <Text>
           {venue} ({city}, {state})
         </Text>
-        <Text>
-          {format(
-            parseISO(`${match.concert.local_date}T${match.concert.local_time}`),
-            "MMMM d, yyyy 'at' h:mm a"
-          )}
-        </Text>
+        <Text>{formatDateTime(match)}</Text>
         <Text fontSize="sm">
           Price range: ${match.concert.min_price} -{" $"}
           {match.concert.max_price}
@@ -68,6 +63,7 @@ export default function ConcertCard({ match }: Props) {
           width="3xs"
           backgroundColor="brand.primary"
           color="white"
+          onClick={() => window.open(match.concert.url, "_blank")}
         >
           Buy tickets
         </Button>

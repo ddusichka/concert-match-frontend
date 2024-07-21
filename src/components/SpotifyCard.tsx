@@ -51,7 +51,7 @@ export default function SpotifyCard({ match }: Props) {
             </StatNumber>
           </Stat>
           <Stat>
-            <StatLabel fontSize={20}>First saved on</StatLabel>
+            <StatLabel fontSize={20}>First liked on</StatLabel>
             <StatNumber fontSize={28}>{findEarliestAddedAtDate()}</StatNumber>
           </Stat>
         </Flex>
