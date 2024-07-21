@@ -1,7 +1,7 @@
 import { Flex, Box } from "@chakra-ui/react";
 
 import React from "react";
-import StatCard from "./StatCard";
+import SpotifyCard from "./SpotifyCard";
 import { Match } from "@/types";
 import ConcertCard from "./ConcertCard";
 
@@ -22,7 +22,7 @@ export default function MatchCard({ match }: Props) {
         px="3"
         py="4"
       >
-        <StatCard match={match} />
+        <SpotifyCard match={match} />
       </Box>
     </Flex>
   );

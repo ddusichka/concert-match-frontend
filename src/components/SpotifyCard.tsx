@@ -13,7 +13,7 @@ import PlaylistHeader from "./PlaylistHeader";
 
 type Props = { match: Match };
 
-export default function StatCard({ match }: Props) {
+export default function SpotifyCard({ match }: Props) {
   function findEarliestAddedAtDate(): string {
     let earliestDate: Date | null = null;
 
@@ -56,8 +56,8 @@ export default function StatCard({ match }: Props) {
           </Stat>
         </Flex>
 
+        <PlaylistHeader />
         <Stack gap="2" overflowX={"scroll"} maxHeight={"300px"}>
-          <PlaylistHeader />
           {match.albums.map((album) => (
             <AlbumRow album={album} />
           ))}
