@@ -12,6 +12,7 @@ import {
 import { CheckIcon, AddIcon } from "@chakra-ui/icons";
 import { Match } from "@/types";
 import { formatDateTime } from "@/utils/clientUtils";
+import { postWithUsername } from "@/utils/serverUtils";
 
 type Props = {
   match: Match;
@@ -19,10 +20,12 @@ type Props = {
 
 export default function ConcertCard({ match }: Props) {
   const { image_url, name, venue, city, state } = match.concert;
-  const [icon, setIcon] = useState("check"); // Initial icon state
+  const [icon, setIcon] = useState(match.favorite ? "check" : "add"); // Initial icon state
 
   const toggleIcon = () => {
     setIcon(icon === "check" ? "add" : "check");
+    const endpoint = `http://localhost:8000/matches/favorite/${match.id}`;
+    postWithUsername(endpoint);
   };
 
   return (

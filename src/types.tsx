@@ -39,6 +39,7 @@ export type Match = {
   concert: ConcertInfo;
   artist_name: string;
   albums: Album[];
+  favorite: boolean;
 };
 
 import { DefaultSession } from "next-auth";

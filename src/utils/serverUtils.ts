@@ -34,6 +34,25 @@ export const getWithUsername = async (
 
   if (!response.ok) {
     throw new Error(
+      `Network response was not ok, status code: ${response.status}. Error: ${response.statusText}`
+    );
+  }
+
+  return await response.json();
+};
+
+export const postWithUsername = async (url: string, body?: {}) => {
+  const session = await getAuthSession();
+  if (!session) return null;
+  const response = await fetch(`${url}/${session.user.sub}/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) {
+    throw new Error(
       `Network response was not ok, status code: ${response.status}`
     );
   }
